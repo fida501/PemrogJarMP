@@ -422,12 +422,11 @@ namespace AlterunaCars
 
         private void SetPosition()
         {
-            if (isLocalPlayer)
-            {
-                transform.position = new Vector3(Random.Range(-30, 30), 0, Random.Range(-30, 30));
+            
+                // transform.position = new Vector3(Random.Range(-30, 30), 0, Random.Range(-30, 30));
+                transform.localPosition = new Vector3(Random.Range(-30, 30), 0, Random.Range(-30, 30));
                 //logwarning
                 // Debug.LogError("Player position set to: " + transform.position);
-            }
         }
     }
 }
