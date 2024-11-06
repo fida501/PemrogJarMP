@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneId: 0
-  _assetId: 902594145
+  _assetId: 1853832188
   serverOnly: 0
   visibility: 0
   hasSpawned: 0
@@ -69,3 +69,4 @@ MonoBehaviour:
   PlayerIdNumber: 0
   PlayerSteamID: 0
   PlayerName: 
+  Ready: 0

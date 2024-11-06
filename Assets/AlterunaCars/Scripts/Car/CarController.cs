@@ -79,7 +79,7 @@ namespace AlterunaCars
             foreach (var wheel in wheels) wheel.CarController = this;
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
             if (SceneManager.GetActiveScene().name == "Game")
             {
@@ -411,6 +411,7 @@ namespace AlterunaCars
         {
             //random pos 
             transform.position = new Vector3(Random.Range(-15f, 15f), 1f, Random.Range(-15f, 15f));
+            gameObject.transform.position = transform.position;
         }
     }
 }
