@@ -411,7 +411,7 @@ namespace AlterunaCars
         {
             if (isLocalPlayer)
             {
-                transform.position = new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10));
+                transform.position = new Vector3(Random.Range(-30, 30), 0, Random.Range(-30, 30));
                 //logwarning
                 Debug.LogWarning("Player position set to: " + transform.position);
             }
