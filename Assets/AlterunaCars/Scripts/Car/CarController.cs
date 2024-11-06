@@ -426,7 +426,7 @@ namespace AlterunaCars
             {
                 transform.position = new Vector3(Random.Range(-30, 30), 0, Random.Range(-30, 30));
                 //logwarning
-                Debug.LogWarning("Player position set to: " + transform.position);
+                Debug.LogError("Player position set to: " + transform.position);
             }
         }
     }
