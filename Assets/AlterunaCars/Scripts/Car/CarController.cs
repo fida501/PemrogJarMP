@@ -57,7 +57,7 @@ namespace AlterunaCars
             _targetTorque = new SyncedAxis(_inputManager, "Vertical");
 
             // Set owner for wheels.
-            foreach (var wheel in wheels) wheel.CarController = this;
+            foreach (var wheel in wheels) wheel.CarController = this;   
         }
 
         private new void Reset()
