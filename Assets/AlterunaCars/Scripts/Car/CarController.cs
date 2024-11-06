@@ -410,8 +410,7 @@ namespace AlterunaCars
         private void SetPosition()
         {
             //random pos 
-            transform.position = new Vector3(Random.Range(-15f, 15f), 1f, Random.Range(-15f, 15f));
-            gameObject.transform.position = transform.position;
+            transform.position = new Vector3(Random.Range(-10, 10), 0, Random.Range(-10, 10));
         }
     }
 }
