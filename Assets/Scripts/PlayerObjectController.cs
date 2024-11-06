@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,7 +31,12 @@ public class PlayerObjectController : NetworkBehaviour
             LobbyController.Instance.UpdatePlayerList();
         }
     }
-    
+
+    private void Start()
+    {
+        DontDestroyOnLoad(this.gameObject);
+    }
+
     private CustomNetworkManager manager;
 
     private CustomNetworkManager Manager
@@ -99,5 +105,20 @@ public class PlayerObjectController : NetworkBehaviour
         {
             LobbyController.Instance.UpdatePlayerList();
         }
+    }
+
+    public void CanStartGame(string SceneName)
+    {
+        if (isOwned)
+        {
+            CmdCanStartGame(SceneName);
+        }
+        
+    }
+    
+    [Command]
+    public void CmdCanStartGame(string SceneName)
+    {
+        manager.StartGame(SceneName);
     }
 }

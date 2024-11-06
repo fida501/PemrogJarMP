@@ -72,7 +72,7 @@ public class LobbyController : MonoBehaviour
             readyButtonText.text = "Ready";
         }
     }
-    
+
     public void CheckIfAllReady()
     {
         bool allReady = false;
@@ -107,7 +107,6 @@ public class LobbyController : MonoBehaviour
         }
     }
 
-   
 
     public void UpdateLobbyName()
     {
@@ -213,8 +212,8 @@ public class LobbyController : MonoBehaviour
                 }
             }
         }
+
         CheckIfAllReady();
-        
     }
 
     public void RemovePlayerItem()
@@ -240,6 +239,9 @@ public class LobbyController : MonoBehaviour
             }
         }
     }
-    
-    
+
+    public void StartGamne(string sceneName)
+    {
+        localPlayerController.CanStartGame(sceneName);
+    }
 }
