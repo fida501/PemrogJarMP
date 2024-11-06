@@ -45,6 +45,19 @@ namespace AlterunaCars
         public override void OnStartLocalPlayer()
         {
             playerCamera.SetActive(true);
+            
+            if (_inputManager == null) _inputManager = GetComponent<InputSynchronizable>();
+
+            _rb = GetComponent<Rigidbody>();
+            if (centerOfMass != null) _rb.centerOfMass = centerOfMass.localPosition;
+
+            // Setup inputs.
+            _handbrake = new SyncedKey(_inputManager, KeyCode.Space);
+            _targetSteering = new SyncedAxis(_inputManager, "Horizontal");
+            _targetTorque = new SyncedAxis(_inputManager, "Vertical");
+
+            // Set owner for wheels.
+            foreach (var wheel in wheels) wheel.CarController = this;
         }
 
         private new void Reset()
@@ -64,19 +77,19 @@ namespace AlterunaCars
             {
                 playerCamera.SetActive(false);
             }
-
-            if (_inputManager == null) _inputManager = GetComponent<InputSynchronizable>();
-
-            _rb = GetComponent<Rigidbody>();
-            if (centerOfMass != null) _rb.centerOfMass = centerOfMass.localPosition;
-
-            // Setup inputs.
-            _handbrake = new SyncedKey(_inputManager, KeyCode.Space);
-            _targetSteering = new SyncedAxis(_inputManager, "Horizontal");
-            _targetTorque = new SyncedAxis(_inputManager, "Vertical");
-
-            // Set owner for wheels.
-            foreach (var wheel in wheels) wheel.CarController = this;
+            //
+            // if (_inputManager == null) _inputManager = GetComponent<InputSynchronizable>();
+            //
+            // _rb = GetComponent<Rigidbody>();
+            // if (centerOfMass != null) _rb.centerOfMass = centerOfMass.localPosition;
+            //
+            // // Setup inputs.
+            // _handbrake = new SyncedKey(_inputManager, KeyCode.Space);
+            // _targetSteering = new SyncedAxis(_inputManager, "Horizontal");
+            // _targetTorque = new SyncedAxis(_inputManager, "Vertical");
+            //
+            // // Set owner for wheels.
+            // foreach (var wheel in wheels) wheel.CarController = this;
         }
 
         private void Update()
