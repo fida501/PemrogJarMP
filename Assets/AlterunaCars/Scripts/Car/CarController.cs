@@ -256,7 +256,7 @@ namespace AlterunaCars
         private void SetPosition()
         {
             // transform.position = new Vector3(Random.Range(-30, 30), 0, Random.Range(-30, 30));
-            transform.position = new Vector3(Random.Range(-30, 30), 0, Random.Range(-30, 30));
+            transform.position = new Vector3(Random.Range(-30, 30), 1, Random.Range(-30, 30));
             _rb.constraints = RigidbodyConstraints.None;
         }
     }
