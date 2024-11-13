@@ -284,9 +284,13 @@ namespace AlterunaCars
                     break;
             }
 
+            if (spawnPoint == null)
+            {
+                Debug.LogError("Spawn point is null");
+                return;
+            }
             transform.position = spawnPoint.transform.position;
             transform.rotation = spawnPoint.transform.rotation;
-            // transform.position = new Vector3(Random.Range(-30, 30), 0, Random.Range(-30, 30));
             _rb.constraints = RigidbodyConstraints.None;
         }
 
