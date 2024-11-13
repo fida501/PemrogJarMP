@@ -10,7 +10,7 @@ public class GameManager : NetworkBehaviour
 
     [SyncVar] public string raceStatus = "wait";
     [SyncVar] public float gameTimer = 0f;
-
+    public List<GameObject> respawnPoints = new List<GameObject>();
     private void Awake()
     {
         if (instance == null)

@@ -15,6 +15,10 @@ public class PlayerUIController : MonoBehaviour
 
     public void UpdateSpeed(float speed)
     {
+        if (speed < 0)
+        {
+            speed = speed * -1;
+        }
         speedText.text = speed.ToString("F2");
     }
 }

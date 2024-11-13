@@ -1,5 +1,7 @@
-﻿using Alteruna;
+﻿using System.Collections;
+using Alteruna;
 using Mirror;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -37,22 +39,23 @@ namespace AlterunaCars
         public GameObject playerCamera;
         public GameObject playerCanvas;
         public PlayerUIController playerUIController;
+        [SerializeField] PlayerObjectController playerObjectController;
+        private bool _isSpeedBoostActive = false;
 
         public override void OnStartLocalPlayer()
         {
             playerCamera.SetActive(true);
             playerCanvas.SetActive(true);
         }
-        
-        
+
 
         private new void Reset()
         {
             // base.Reset();
             // _inputManager = GetComponent<InputSynchronizable>();
-
             //reset player position
-            SetPosition();
+            // change z rotation to 0
+            transform.rotation = quaternion.Euler(transform.rotation.x, transform.rotation.y, 0f);
         }
 
         private void Start()
@@ -63,17 +66,17 @@ namespace AlterunaCars
             {
                 playerCamera.SetActive(false);
             }
-            
+
             if (_inputManager == null) _inputManager = GetComponent<InputSynchronizable>();
-            
+
             _rb = GetComponent<Rigidbody>();
             if (centerOfMass != null) _rb.centerOfMass = centerOfMass.localPosition;
-            
+
             // Setup inputs.
             _handbrake = new SyncedKey(_inputManager, KeyCode.Space);
             _targetSteering = new SyncedAxis(_inputManager, "Horizontal");
             _targetTorque = new SyncedAxis(_inputManager, "Vertical");
-            
+
             // Set owner for wheels.
             foreach (var wheel in wheels) wheel.CarController = this;
         }
@@ -91,6 +94,10 @@ namespace AlterunaCars
                 if (isOwned)
                 {
                     MovingCar();
+                    if (Input.GetKeyUp(KeyCode.R))
+                    {
+                        Reset();
+                    }
                 }
             }
         }
@@ -235,8 +242,11 @@ namespace AlterunaCars
             #region Apply to wheels
 
             if (TrackController.IsStarted)
+            {
+                float speedMultiplier = _isSpeedBoostActive ? 2 : 1;
                 foreach (var wheel in wheels)
-                    wheel.UpdateWheel(_steering, torqueToWheel, _handbrake);
+                    wheel.UpdateWheel(_steering, torqueToWheel * speedMultiplier, _handbrake);
+            }
             else
                 foreach (var wheel in wheels)
                     wheel.UpdateWheel(_steering, 0, true);
@@ -249,15 +259,48 @@ namespace AlterunaCars
             {
                 RacingUI.Instance.SetSpeed(speed);
             }
+
             playerUIController.UpdateSpeed(speed);
             playerUIController.UpdateTimer();
         }
 
         private void SetPosition()
         {
+            int playerIndex = playerObjectController.PlayerIdNumber;
+            GameObject spawnPoint = null;
+            switch (playerIndex)
+            {
+                case 1:
+                    spawnPoint = GameManager.instance.respawnPoints[0];
+                    break;
+                case 2:
+                    spawnPoint = GameManager.instance.respawnPoints[1];
+                    break;
+                case 3:
+                    spawnPoint = GameManager.instance.respawnPoints[2];
+                    break;
+                case 4:
+                    spawnPoint = GameManager.instance.respawnPoints[3];
+                    break;
+            }
+
+            transform.position = spawnPoint.transform.position;
+            transform.rotation = spawnPoint.transform.rotation;
             // transform.position = new Vector3(Random.Range(-30, 30), 0, Random.Range(-30, 30));
-            transform.position = new Vector3(Random.Range(-30, 30), 1, Random.Range(-30, 30));
             _rb.constraints = RigidbodyConstraints.None;
+        }
+
+        public void ActiveSpeedPowerUp()
+        {
+            _isSpeedBoostActive = true;
+            Debug.Log("SpeedBoost activated is " + _isSpeedBoostActive);
+            StartCoroutine(DisableSpeedPowerUp());
+        }
+
+        private IEnumerator DisableSpeedPowerUp()
+        {
+            yield return new WaitForSeconds(3);
+            _isSpeedBoostActive = false;
         }
     }
 }

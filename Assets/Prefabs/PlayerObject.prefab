@@ -290,6 +290,7 @@ MonoBehaviour:
   playerCamera: {fileID: 7465937173367705062}
   playerCanvas: {fileID: 2650389278834835089}
   playerUIController: {fileID: 1358893393782134779}
+  playerObjectController: {fileID: 1753005147334114900}
 --- !u!65 &6636664199115673039
 BoxCollider:
   m_ObjectHideFlags: 0
