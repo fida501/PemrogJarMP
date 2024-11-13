@@ -66,7 +66,8 @@ public class GameManager : NetworkBehaviour
             gameTimer += Time.deltaTime;
         }
     }
-
+    
+    [ServerCallback]
     private IEnumerator ChangeStatusAfterDelay(string newStatus)
     {
         globalTMP.GetComponent<TMPro.TextMeshProUGUI>().text = "3";
