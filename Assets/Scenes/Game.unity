@@ -11720,7 +11720,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1304034225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14568,7 +14568,8 @@ MonoBehaviour:
   - {fileID: 426617646}
   globalCanvas: {fileID: 1304034224}
   globalTMP: {fileID: 2066671587}
-  players: []
+  isCanvasVisible: 0
+  countdownText: 3
   isStarted: 0
 --- !u!4 &1699438418
 Transform:
