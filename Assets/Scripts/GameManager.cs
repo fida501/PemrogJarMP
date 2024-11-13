@@ -1,18 +1,18 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using TMPro;
 
 public class GameManager : NetworkBehaviour
 {
     public static GameManager instance;
 
-    [SyncVar] public string raceStatus = "start";
+    [SyncVar(hook = nameof(OnRaceStatusChanged))] public string raceStatus = "start";
     [SyncVar] public float gameTimer = 0f;
     public List<GameObject> respawnPoints = new List<GameObject>();
     public GameObject globalCanvas;
-    [SyncVar] public GameObject globalTMP;
+    public TextMeshProUGUI globalTMP; // Instead of SyncVar for GameObject, use TextMeshProUGUI directly
     [SyncVar] public List<GameObject> players = new List<GameObject>();
     public bool isStarted = false;
 
@@ -34,29 +34,13 @@ public class GameManager : NetworkBehaviour
         CmdInitializeRace();
     }
 
-    // [Server]
-    // private void InitializeRace()
-    // {
-    //     gameTimer = 0f;
-    //     StartCoroutine(ChangeStatusAfterDelay("start"));
-    //     // raceStatus = "start";
-    // }
-    // [Server]
-    // private void CmdInitializeRace()
-    // {
-    //     gameTimer = 0f;
-    //     StartCoroutine(ChangeStatusAfterDelay("start"));
-    //     // raceStatus = "start";
-    // }
     [ServerCallback]
     private void CmdInitializeRace()
     {
         isStarted = true;
         gameTimer = 0f;
         StartCoroutine(ChangeStatusAfterDelay("start"));
-        // raceStatus = "start";
     }
-
 
     [ServerCallback]
     private void Update()
@@ -81,8 +65,7 @@ public class GameManager : NetworkBehaviour
 
     private IEnumerator ChangeStatusAfterDelay(string newStatus)
     {
-        globalCanvas.SetActive(true);
-        globalTMP.SetActive(true);
+        globalCanvas.SetActive(true);  // Display canvas and countdown
         UpdateGlobalTMPText("3");
         yield return new WaitForSeconds(1f);
         UpdateGlobalTMPText("2");
@@ -92,31 +75,37 @@ public class GameManager : NetworkBehaviour
         UpdateGlobalTMPText("GO!");
         yield return new WaitForSeconds(1f);
         DisableEssentials();
-        UpdateStatus(newStatus); // Update the SyncVar on the server
+        UpdateStatus(newStatus);  // Update the SyncVar on the server
     }
 
     [ServerCallback]
     public void DisableEssentials()
     {
         globalCanvas.SetActive(false);
-        globalTMP.SetActive(false);
     }
 
     // Update the SyncVar value on the server
     [ServerCallback]
     private void UpdateStatus(string newStatus)
     {
-        raceStatus = newStatus; // This will automatically sync to all clients
+        raceStatus = newStatus;  // This will automatically sync to all clients
     }
 
     [ServerCallback]
     private void UpdateGlobalTMPText(string countdownText)
     {
-        globalTMP.GetComponent<TMPro.TextMeshProUGUI>().text = countdownText;
+        globalTMP.text = countdownText;  // Update the TMP text directly
+    }
+
+    // Sync the race status across clients (using SyncVar hook)
+    private void OnRaceStatusChanged(string oldStatus, string newStatus)
+    {
+        // Handle any behavior that should occur when the race status changes
+        // For example, update UI or trigger other events based on race status
     }
 
     public bool AreAllPlayerConnected()
     {
-        return NetworkServer.connections.Count >= 2;
+        return NetworkServer.connections.Count >= 2;  // Minimum number of players to start the race
     }
 }
