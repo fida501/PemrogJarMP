@@ -10,10 +10,12 @@ public class GameManager : NetworkBehaviour
 
     [SyncVar(hook = nameof(OnRaceStatusChanged))] public string raceStatus = "start";
     [SyncVar] public float gameTimer = 0f;
+
     public List<GameObject> respawnPoints = new List<GameObject>();
     public GameObject globalCanvas;
-    public TextMeshProUGUI globalTMP; // Instead of SyncVar for GameObject, use TextMeshProUGUI directly
-    [SyncVar] public List<GameObject> players = new List<GameObject>();
+    public TextMeshProUGUI globalTMP; // Reference to the TextMeshPro component
+    [SyncVar] public bool isCanvasVisible = false; // Sync the visibility of the canvas
+    [SyncVar] public string countdownText = "3"; // Sync the countdown text
     public bool isStarted = false;
 
     private void Awake()
@@ -65,7 +67,8 @@ public class GameManager : NetworkBehaviour
 
     private IEnumerator ChangeStatusAfterDelay(string newStatus)
     {
-        globalCanvas.SetActive(true);  // Display canvas and countdown
+        // Update countdown and canvas visibility
+        SetCanvasVisibility(true); // Show the canvas
         UpdateGlobalTMPText("3");
         yield return new WaitForSeconds(1f);
         UpdateGlobalTMPText("2");
@@ -75,13 +78,13 @@ public class GameManager : NetworkBehaviour
         UpdateGlobalTMPText("GO!");
         yield return new WaitForSeconds(1f);
         DisableEssentials();
-        UpdateStatus(newStatus);  // Update the SyncVar on the server
+        UpdateStatus(newStatus);
     }
 
     [ServerCallback]
-    public void DisableEssentials()
+    private void DisableEssentials()
     {
-        globalCanvas.SetActive(false);
+        SetCanvasVisibility(false); // Hide the canvas
     }
 
     // Update the SyncVar value on the server
@@ -91,10 +94,18 @@ public class GameManager : NetworkBehaviour
         raceStatus = newStatus;  // This will automatically sync to all clients
     }
 
+    // Update the countdown text
     [ServerCallback]
     private void UpdateGlobalTMPText(string countdownText)
     {
-        globalTMP.text = countdownText;  // Update the TMP text directly
+        this.countdownText = countdownText; // Sync the countdown text value
+    }
+
+    // Set the canvas visibility and sync it across clients
+    [Server]
+    private void SetCanvasVisibility(bool isVisible)
+    {
+        isCanvasVisible = isVisible;  // Sync the visibility across clients
     }
 
     // Sync the race status across clients (using SyncVar hook)
@@ -102,6 +113,21 @@ public class GameManager : NetworkBehaviour
     {
         // Handle any behavior that should occur when the race status changes
         // For example, update UI or trigger other events based on race status
+    }
+
+    // Handle updating the canvas visibility and text updates on the client side
+    [ClientRpc]
+    private void RpcUpdateCanvasVisibilityAndText(bool isVisible, string countdownText)
+    {
+        globalCanvas.SetActive(isVisible);  // Set the canvas active state
+        globalTMP.text = countdownText;  // Update the countdown text
+    }
+
+    // Handle client-side updates for the canvas visibility
+    [ServerCallback]
+    public void UpdateCanvasVisibilityOnClients()
+    {
+        RpcUpdateCanvasVisibilityAndText(isCanvasVisible, countdownText); // Sync with all clients
     }
 
     public bool AreAllPlayerConnected()
