@@ -98,7 +98,7 @@ public class GameManager : NetworkBehaviour
     }
 
     [ServerCallback]
-    public void UpdateGlobalTMPText(string countdownText)
+    private void UpdateGlobalTMPText(string countdownText)
     {
         globalTMP.GetComponent<TMPro.TextMeshProUGUI>().text = countdownText;
     }
