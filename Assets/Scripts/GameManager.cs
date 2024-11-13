@@ -25,6 +25,7 @@ public class GameManager : NetworkBehaviour
     public override void OnStartServer()
     {
         InitializeRace();
+        StartRace();
     }
 
     [Server]
@@ -42,4 +43,20 @@ public class GameManager : NetworkBehaviour
             gameTimer += Time.deltaTime;
         }
     }
+    
+    //Change to start raceStatus after 3 seconds
+    [Server]
+    public void StartRace()
+    {
+        StartCoroutine(StartRaceCountdown());
+    }
+    
+    [Server]
+    private IEnumerator StartRaceCountdown()
+    {
+        yield return new WaitForSeconds(3);
+        raceStatus = "start";
+    }
+    
+    
 }

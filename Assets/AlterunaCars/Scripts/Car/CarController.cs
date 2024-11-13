@@ -93,6 +93,11 @@ namespace AlterunaCars
 
                 if (isOwned)
                 {
+                    if (GameManager.instance.raceStatus != "start")
+                    {
+                        SetPosition();
+                        return;
+                    }
                     MovingCar();
                     if (Input.GetKeyUp(KeyCode.R))
                     {
@@ -289,6 +294,7 @@ namespace AlterunaCars
                 Debug.LogError("Spawn point is null");
                 return;
             }
+
             transform.position = spawnPoint.transform.position;
             transform.rotation = spawnPoint.transform.rotation;
             _rb.constraints = RigidbodyConstraints.None;
