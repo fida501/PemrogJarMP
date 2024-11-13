@@ -14559,7 +14559,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0.1
-  raceStatus: start
+  raceStatus: idle
   gameTimer: 0
   respawnPoints:
   - {fileID: 388100638}

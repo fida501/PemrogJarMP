@@ -14,6 +14,7 @@ public class GameManager : NetworkBehaviour
     public GameObject globalCanvas;
     [SyncVar] public GameObject globalTMP;
     [SyncVar] public List<GameObject> players = new List<GameObject>();
+    public bool isStarted = false;
 
     private void Awake()
     {
@@ -30,10 +31,8 @@ public class GameManager : NetworkBehaviour
     public override void OnStartServer()
     {
         base.OnStartServer();
-        // CmdInitializeRace();
-        ChangeStatusAfterDelay("start");
+        CmdInitializeRace();
     }
-
 
     // [Server]
     // private void InitializeRace()
@@ -52,6 +51,7 @@ public class GameManager : NetworkBehaviour
     [ServerCallback]
     private void CmdInitializeRace()
     {
+        isStarted = true;
         gameTimer = 0f;
         StartCoroutine(ChangeStatusAfterDelay("start"));
         // raceStatus = "start";
@@ -65,6 +65,18 @@ public class GameManager : NetworkBehaviour
         {
             gameTimer += Time.deltaTime;
         }
+
+        if (isStarted)
+        {
+            return;
+        }
+
+        if (AreAllPlayerConnected() == false)
+        {
+            return;
+        }
+
+        CmdInitializeRace();
     }
 
     private IEnumerator ChangeStatusAfterDelay(string newStatus)
@@ -101,5 +113,10 @@ public class GameManager : NetworkBehaviour
     private void UpdateGlobalTMPText(string countdownText)
     {
         globalTMP.GetComponent<TMPro.TextMeshProUGUI>().text = countdownText;
+    }
+
+    public bool AreAllPlayerConnected()
+    {
+        return NetworkServer.connections.Count >= 1;
     }
 }
