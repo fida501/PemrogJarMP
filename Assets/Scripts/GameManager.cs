@@ -30,8 +30,8 @@ public class GameManager : NetworkBehaviour
     public override void OnStartServer()
     {
         base.OnStartServer();
-        players = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
-        CmdInitializeRace();
+        // CmdInitializeRace();
+        ChangeStatusAfterDelay("start");
     }
 
 
@@ -66,22 +66,23 @@ public class GameManager : NetworkBehaviour
             gameTimer += Time.deltaTime;
         }
     }
-    
-    [ServerCallback]
+
     private IEnumerator ChangeStatusAfterDelay(string newStatus)
     {
-        globalTMP.GetComponent<TMPro.TextMeshProUGUI>().text = "3";
+        globalCanvas.SetActive(true);
+        globalTMP.SetActive(true);
+        UpdateGlobalTMPText("3");
         yield return new WaitForSeconds(1f);
-        globalTMP.GetComponent<TMPro.TextMeshProUGUI>().text = "2";
+        UpdateGlobalTMPText("2");
         yield return new WaitForSeconds(1f);
-        globalTMP.GetComponent<TMPro.TextMeshProUGUI>().text = "1";
+        UpdateGlobalTMPText("1");
         yield return new WaitForSeconds(1f);
-        globalTMP.GetComponent<TMPro.TextMeshProUGUI>().text = "GO!";
+        UpdateGlobalTMPText("GO!");
         yield return new WaitForSeconds(1f);
         DisableEssentials();
         UpdateStatus(newStatus); // Update the SyncVar on the server
     }
-    
+
     [ServerCallback]
     public void DisableEssentials()
     {
@@ -94,5 +95,11 @@ public class GameManager : NetworkBehaviour
     private void UpdateStatus(string newStatus)
     {
         raceStatus = newStatus; // This will automatically sync to all clients
+    }
+
+    [ServerCallback]
+    public void UpdateGlobalTMPText(string countdownText)
+    {
+        globalTMP.GetComponent<TMPro.TextMeshProUGUI>().text = countdownText;
     }
 }
