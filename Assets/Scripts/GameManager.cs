@@ -117,6 +117,6 @@ public class GameManager : NetworkBehaviour
 
     public bool AreAllPlayerConnected()
     {
-        return NetworkServer.connections.Count >= 1;
+        return NetworkServer.connections.Count >= 2;
     }
 }
