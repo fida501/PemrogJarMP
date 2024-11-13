@@ -8,9 +8,13 @@ public class GameManager : NetworkBehaviour
 {
     public static GameManager instance;
 
-    [SyncVar] public string raceStatus = "wait";
+    [SyncVar] public string raceStatus = "start";
     [SyncVar] public float gameTimer = 0f;
     public List<GameObject> respawnPoints = new List<GameObject>();
+    [SyncVar] public GameObject globalCanvas;
+    public GameObject globalTMP;
+    [SyncVar] public List<GameObject> players = new List<GameObject>();
+
     private void Awake()
     {
         if (instance == null)
@@ -22,18 +26,24 @@ public class GameManager : NetworkBehaviour
             Destroy(gameObject);
         }
     }
+
     public override void OnStartServer()
     {
+        base.OnStartServer();
+        players = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
+        globalTMP = globalCanvas.transform.GetChild(0).gameObject;
         InitializeRace();
-        StartRace();
     }
+
 
     [Server]
     private void InitializeRace()
     {
         gameTimer = 0f;
-        raceStatus = "start";
+        StartCoroutine(ChangeStatusAfterDelay("start"));
+        // raceStatus = "start";
     }
+
 
     [ServerCallback]
     private void Update()
@@ -43,20 +53,25 @@ public class GameManager : NetworkBehaviour
             gameTimer += Time.deltaTime;
         }
     }
-    
-    //Change to start raceStatus after 3 seconds
-    [Server]
-    public void StartRace()
+
+    private IEnumerator ChangeStatusAfterDelay( string newStatus)
     {
-        StartCoroutine(StartRaceCountdown());
+        globalTMP.GetComponent<TMPro.TextMeshProUGUI>().text = "3";
+        yield return new WaitForSeconds(1f);
+        globalTMP.GetComponent<TMPro.TextMeshProUGUI>().text = "2";
+        yield return new WaitForSeconds(1f);
+        globalTMP.GetComponent<TMPro.TextMeshProUGUI>().text = "1";
+        yield return new WaitForSeconds(1f);
+        globalTMP.GetComponent<TMPro.TextMeshProUGUI>().text = "GO!";
+        yield return new WaitForSeconds(1f);
+        globalCanvas.SetActive(false);
+        UpdateStatus(newStatus); // Update the SyncVar on the server
     }
-    
+
+    // Update the SyncVar value on the server
     [Server]
-    private IEnumerator StartRaceCountdown()
+    private void UpdateStatus(string newStatus)
     {
-        yield return new WaitForSeconds(3);
-        raceStatus = "start";
+        raceStatus = newStatus; // This will automatically sync to all clients
     }
-    
-    
 }

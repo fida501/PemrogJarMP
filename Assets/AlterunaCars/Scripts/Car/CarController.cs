@@ -44,8 +44,8 @@ namespace AlterunaCars
 
         public override void OnStartLocalPlayer()
         {
+            base.OnStartLocalPlayer();
             playerCamera.SetActive(true);
-            playerCanvas.SetActive(true);
         }
 
 
@@ -98,6 +98,13 @@ namespace AlterunaCars
                         SetPosition();
                         return;
                     }
+
+                    //Check if canvas is not active
+                    if (!playerCanvas.activeSelf)
+                    {
+                        EnablePlayerEssentials();
+                    }
+
                     MovingCar();
                     if (Input.GetKeyUp(KeyCode.R))
                     {
@@ -105,6 +112,12 @@ namespace AlterunaCars
                     }
                 }
             }
+        }
+
+        [Client]
+        public void EnablePlayerEssentials()
+        {
+            playerCanvas.SetActive(true);
         }
 
         // public override void Possessed(bool isMe, User user)
