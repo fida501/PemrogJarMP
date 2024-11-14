@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using Mirror;
 using Alteruna;
+using AlterunaCars;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace AlterunaCars
-{
+// namespace AlterunaCars
+// {
     [RequireComponent(typeof(InputSynchronizable), typeof(AudioSource))]
     public class CarController : NetworkBehaviour
     {
@@ -273,16 +274,16 @@ namespace AlterunaCars
 
             if (!_isMe) return;
 
-            if (RacingUI.Instance != null)
-            {
-                RacingUI.Instance.SetSpeed(speed);
-            }
+            // if (RacingUI.Instance != null)
+            // {
+            //     RacingUI.Instance.SetSpeed(speed);
+            // }
 
             playerUIController.UpdateSpeed(speed);
             playerUIController.UpdateTimer();
         }
 
-        [Mirror.ClientRpc]
+        [ClientRpc]
         private void SetPosition()
         {
             int playerIndex = playerObjectController.PlayerIdNumber;
@@ -326,5 +327,5 @@ namespace AlterunaCars
             yield return new WaitForSeconds(3);
             _isSpeedBoostActive = false;
         }
-    }
+    // }
 }
