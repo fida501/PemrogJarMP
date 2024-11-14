@@ -79,10 +79,6 @@ namespace AlterunaCars
 
             // Set owner for wheels.
             foreach (var wheel in wheels) wheel.CarController = this;
-            if (isOwned)
-            {
-                SetPosition();
-            }
         }
 
         private void Update()
