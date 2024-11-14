@@ -1,6 +1,6 @@
 ﻿using System.Collections;
-using Alteruna;
 using Mirror;
+using Alteruna;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -282,7 +282,7 @@ namespace AlterunaCars
             playerUIController.UpdateTimer();
         }
 
-        [ClientRpc]
+        [Mirror.ClientRpc]
         private void SetPosition()
         {
             int playerIndex = playerObjectController.PlayerIdNumber;
