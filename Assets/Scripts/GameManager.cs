@@ -49,7 +49,7 @@ public class GameManager : NetworkBehaviour
     //     StartCoroutine(ChangeStatusAfterDelay("start"));
     //     // raceStatus = "start";
     // }
-    [Server]
+    [Command (requiresAuthority = false)]
     private void CmdInitializeRace()
     {
         isStarted = true;
@@ -59,7 +59,7 @@ public class GameManager : NetworkBehaviour
     }
 
 
-    [ServerCallback]
+    // [ServerCallback]
     private void Update()
     {
         if (raceStatus == "start")
