@@ -95,7 +95,7 @@ public class GameManager : NetworkBehaviour
     }
 
     // Update the SyncVar value on the server
-    [ClientRpc]
+    [ServerCallback]
     private void UpdateStatus(string newStatus)
     {
         raceStatus = newStatus; // This will automatically sync to all clients
