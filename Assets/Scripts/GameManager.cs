@@ -9,7 +9,9 @@ public class GameManager : NetworkBehaviour
 {
     public static GameManager instance;
 
-    [SyncVar] public string raceStatus = "start";
+    [SyncVar(hook = nameof(OnRaceStatusChanged))]
+    public string raceStatus = "start";
+
     [SyncVar] public float gameTimer = 0f;
     public List<GameObject> respawnPoints = new List<GameObject>();
     public GameObject globalCanvas;
@@ -26,7 +28,7 @@ public class GameManager : NetworkBehaviour
         else
         {
             Destroy(gameObject);
-        }   
+        }
     }
 
     public override void OnStartServer()
@@ -92,6 +94,7 @@ public class GameManager : NetworkBehaviour
     }
 
     // Update the SyncVar value on the server
+    [Server]
     private void UpdateStatus(string newStatus)
     {
         raceStatus = newStatus; // This will automatically sync to all clients
@@ -100,5 +103,13 @@ public class GameManager : NetworkBehaviour
     private void UpdateGlobalTMPText(string countdownText)
     {
         globalTMP.text = countdownText;
+    }
+
+    private void OnRaceStatusChanged(string oldStatus, string newStatus)
+    {
+        if (newStatus == "start")
+        {
+            globalCanvas.SetActive(false);
+        }
     }
 }
