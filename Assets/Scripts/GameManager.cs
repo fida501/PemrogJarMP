@@ -49,7 +49,7 @@ public class GameManager : NetworkBehaviour
     //     StartCoroutine(ChangeStatusAfterDelay("start"));
     //     // raceStatus = "start";
     // }
-    [Command (requiresAuthority = false)]
+    [ClientRpc]
     private void CmdInitializeRace()
     {
         isStarted = true;
@@ -72,10 +72,10 @@ public class GameManager : NetworkBehaviour
             CmdInitializeRace();
         }
     }
-    
+
     private IEnumerator ChangeStatusAfterDelay(string newStatus)
-    {   
-        yield return new WaitForSeconds(2f);
+    {
+        yield return new WaitForSeconds(1.5f);
         UpdateGlobalTMPText("3");
         yield return new WaitForSeconds(1f);
         UpdateGlobalTMPText("2");
