@@ -84,13 +84,7 @@ public class GameManager : NetworkBehaviour
         yield return new WaitForSeconds(1f);
         UpdateGlobalTMPText("GO!");
         yield return new WaitForSeconds(1f);
-        DisableEssentials();
         UpdateStatus(newStatus); // Update the SyncVar on the server
-    }
-
-    private void DisableEssentials()
-    {
-        globalCanvas.SetActive(false);
     }
 
     // Update the SyncVar value on the server
