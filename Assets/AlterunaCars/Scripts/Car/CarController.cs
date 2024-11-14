@@ -137,7 +137,6 @@ public class CarController : NetworkBehaviour
         value = Mathf.LerpUnclamped(value, target, Mathf.Min(Time.fixedDeltaTime / smoothing, 1f));
 
 
-    [Command]
     private void MovingCar()
     {
         DeltaSmoothing(ref _steering, _targetSteering.Value, STEERING_SMOOTHING);
