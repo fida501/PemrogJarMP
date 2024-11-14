@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 namespace AlterunaCars
 {
-    [RequireComponent(typeof(InputSynchronizable), typeof(AudioSource))]
+    // [RequireComponent(typeof(InputSynchronizable), typeof(AudioSource))]
     public class CarController : NetworkBehaviour
     {
         private const float ENGINE_SMOOTHING = 1f;

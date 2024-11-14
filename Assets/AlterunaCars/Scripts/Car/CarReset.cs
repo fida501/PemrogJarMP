@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace AlterunaCars
 {
-	[RequireComponent(typeof(RigidbodySynchronizable))]
+	// [RequireComponent(typeof(RigidbodySynchronizable))]
 	public class CarReset : CommunicationBridge
 	{
 		public KeyCode ResetKey = KeyCode.R;
