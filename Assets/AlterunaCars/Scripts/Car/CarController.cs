@@ -283,7 +283,7 @@ public class CarController : NetworkBehaviour
         playerUIController.UpdateSpeed(speed);
         playerUIController.UpdateTimer();
     }
-
+    [ClientRpc]
     private void SetPosition()
     {
         Debug.Log("Setting position");

@@ -93,7 +93,7 @@ public class GameManager : NetworkBehaviour
     // {
     //     raceStatus = newStatus; // This will automatically sync to all clients
     // }
-    [Command]
+    [Command(requiresAuthority = false)]
     private void UpdateStatus(string newStatus)
     {
         if (isServer)
