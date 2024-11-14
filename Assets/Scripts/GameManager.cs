@@ -109,7 +109,7 @@ public class GameManager : NetworkBehaviour
         raceStatus = newStatus; // This will automatically sync to all clients
     }
 
-    [ServerCallback]
+    [ClientRpc]
     private void UpdateGlobalTMPText(string countdownText)
     {
         globalTMP.GetComponent<TMPro.TextMeshProUGUI>().text = countdownText;
