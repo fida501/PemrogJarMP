@@ -81,7 +81,7 @@ namespace AlterunaCars
             foreach (var wheel in wheels) wheel.CarController = this;
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             if (SceneManager.GetActiveScene().name == "Game")
             {
@@ -114,7 +114,6 @@ namespace AlterunaCars
             }
         }
 
-        [Client]
         public void EnablePlayerEssentials()
         {
             playerCanvas.SetActive(true);
@@ -134,7 +133,8 @@ namespace AlterunaCars
 
         private void DeltaSmoothing(ref float value, float target, float smoothing) =>
             value = Mathf.LerpUnclamped(value, target, Mathf.Min(Time.fixedDeltaTime / smoothing, 1f));
-        [ClientRpc]
+
+        // [ClientRpc]
         private void MovingCar()
         {
             DeltaSmoothing(ref _steering, _targetSteering.Value, STEERING_SMOOTHING);
@@ -281,6 +281,7 @@ namespace AlterunaCars
             playerUIController.UpdateSpeed(speed);
             playerUIController.UpdateTimer();
         }
+
         private void SetPosition()
         {
             int playerIndex = playerObjectController.PlayerIdNumber;
