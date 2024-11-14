@@ -283,10 +283,8 @@ public class CarController : NetworkBehaviour
         playerUIController.UpdateSpeed(speed);
         playerUIController.UpdateTimer();
     }
-    [ClientRpc]
     private void SetPosition()
     {
-        Debug.Log("Setting position");
         int playerIndex = playerObjectController.PlayerIdNumber;
         GameObject spawnPoint = null;
         switch (playerIndex)
@@ -313,6 +311,7 @@ public class CarController : NetworkBehaviour
 
         transform.position = spawnPoint.transform.position;
         transform.rotation = spawnPoint.transform.rotation;
+        Debug.Log("Setting position");
         _rb.constraints = RigidbodyConstraints.None;
     }
 
