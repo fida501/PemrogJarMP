@@ -286,6 +286,7 @@ public class CarController : NetworkBehaviour
 
     private void SetPosition()
     {
+        Debug.Log("Setting position");
         int playerIndex = playerObjectController.PlayerIdNumber;
         GameObject spawnPoint = null;
         switch (playerIndex)
