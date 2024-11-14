@@ -281,7 +281,6 @@ namespace AlterunaCars
             playerUIController.UpdateSpeed(speed);
             playerUIController.UpdateTimer();
         }
-        [ClientRpc]
         private void SetPosition()
         {
             int playerIndex = playerObjectController.PlayerIdNumber;
