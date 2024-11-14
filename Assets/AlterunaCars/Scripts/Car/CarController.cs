@@ -285,7 +285,7 @@ public class CarController : NetworkBehaviour
         playerUIController.UpdateTimer();
     }
 
-    [ClientRpc]
+    // [ClientRpc]
     private void SetPosition()
     {
         int playerIndex = playerObjectController.PlayerIdNumber;
