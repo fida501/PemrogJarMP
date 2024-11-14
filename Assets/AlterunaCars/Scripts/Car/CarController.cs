@@ -113,6 +113,7 @@ public class CarController : NetworkBehaviour
                     Reset();
                 }
             }
+            Debug.Log(" Transform position is " + transform.position);
         }
     }
 
@@ -311,7 +312,6 @@ public class CarController : NetworkBehaviour
 
         transform.position = spawnPoint.transform.position;
         transform.rotation = spawnPoint.transform.rotation;
-        Debug.Log("Setting position");
         _rb.constraints = RigidbodyConstraints.None;
     }
 
