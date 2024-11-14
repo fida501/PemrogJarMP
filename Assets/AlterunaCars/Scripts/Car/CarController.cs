@@ -87,7 +87,7 @@ namespace AlterunaCars
             {
                 if (playerModel.activeSelf == false)
                 {
-                    // SetPosition();
+                    SetPosition();
                     playerModel.SetActive(true);
                 }
 

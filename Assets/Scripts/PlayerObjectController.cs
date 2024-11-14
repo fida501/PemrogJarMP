@@ -18,6 +18,7 @@ public class PlayerObjectController : NetworkBehaviour
     
     [SyncVar(hook = nameof(PlayerReadyUpdate))]
     public bool Ready;
+    public Transform PlayerTransform;
     
 
     private void PlayerReadyUpdate(bool oldValue, bool newValue)
@@ -34,9 +35,11 @@ public class PlayerObjectController : NetworkBehaviour
 
     private void Start()
     {
+        PlayerTransform = GameManager.Instance.PlayerSpawnPoints[PlayerIdNumber].transform;
         DontDestroyOnLoad(this.gameObject);
         var rb = GetComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.FreezeAll;
+
     }
 
     private CustomNetworkManager manager;

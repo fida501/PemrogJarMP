@@ -13,6 +13,7 @@ public class GameManager : NetworkBehaviour
     public List<GameObject> respawnPoints = new List<GameObject>();
     private void Awake()
     {
+        DontDestroyOnLoad(this);
         if (instance == null)
         {
             instance = this;
