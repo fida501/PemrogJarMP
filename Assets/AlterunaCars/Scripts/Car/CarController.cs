@@ -134,7 +134,7 @@ namespace AlterunaCars
 
         private void DeltaSmoothing(ref float value, float target, float smoothing) =>
             value = Mathf.LerpUnclamped(value, target, Mathf.Min(Time.fixedDeltaTime / smoothing, 1f));
-
+        [ClientCallback]
         private void MovingCar()
         {
             DeltaSmoothing(ref _steering, _targetSteering.Value, STEERING_SMOOTHING);
