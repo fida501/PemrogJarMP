@@ -35,7 +35,7 @@ public class PlayerObjectController : NetworkBehaviour
 
     private void Start()
     {
-        PlayerTransform = GameManager.Instance.PlayerSpawnPoints[PlayerIdNumber].transform;
+        PlayerTransform = GameManager.instance.respawnPoints[PlayerIdNumber].transform;
         DontDestroyOnLoad(this.gameObject);
         var rb = GetComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.FreezeAll;
