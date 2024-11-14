@@ -98,6 +98,10 @@ namespace AlterunaCars
                     {
                         Reset();
                     }
+                    if (Input.GetKeyUp(KeyCode.P))
+                    {
+                        SetPosition();
+                    }
                 }
             }
         }
@@ -264,7 +268,7 @@ namespace AlterunaCars
             playerUIController.UpdateTimer();
         }
 
-        private void SetPosition()
+        public void SetPosition()
         {
             int playerIndex = playerObjectController.PlayerIdNumber;
             GameObject spawnPoint = null;

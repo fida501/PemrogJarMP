@@ -7,6 +7,9 @@ using Steamworks;
 using TMPro;
 using UnityEngine.UI;
 using System.Linq;
+using AlterunaCars;
+
+
 
 public class LobbyController : MonoBehaviour
 {
@@ -243,5 +246,9 @@ public class LobbyController : MonoBehaviour
     public void StartGamne(string sceneName)
     {
         localPlayerController.CanStartGame(sceneName);
+
+        GameObject test = localPlayerController.GetComponentInParent<CarController>().gameObject;
+        test.GetComponent<CarController>().SetPosition();
+
     }
 }
