@@ -18,6 +18,7 @@ public class GameManager : NetworkBehaviour
     public TextMeshProUGUI globalTMP;
     [SyncVar] public List<GameObject> players = new List<GameObject>();
     public bool isStarted = false;
+    public GameObject endCanvas;
 
     private void Awake()
     {
@@ -111,7 +112,22 @@ public class GameManager : NetworkBehaviour
     {
         if (newStatus == "start")
         {
-            globalCanvas.SetActive(false);
+            // globalCanvas.SetActive(false);
+            globalTMP.enabled = false;
         }
+
+        if (newStatus == "finish")
+        {
+            endCanvas.SetActive(true);
+        }
+    }
+
+    public void FinishRace(GameObject winnerGameObject)
+    {
+        raceStatus = "finish";
+
+        // Display the winner's name
+        string winnerName = winnerGameObject.GetComponent<PlayerObjectController>().PlayerName;
+        float raceTime = gameTimer;
     }
 }

@@ -42,6 +42,7 @@ public class CarController : NetworkBehaviour
     public PlayerUIController playerUIController;
     [SerializeField] PlayerObjectController playerObjectController;
     private bool _isSpeedBoostActive = false;
+    [SyncVar] public int lapIndex;
 
 
     public override void OnStartAuthority()
@@ -95,6 +96,12 @@ public class CarController : NetworkBehaviour
 
             if (isOwned)
             {
+                if (GameManager.instance.raceStatus == "finish")
+                {
+                    playerCanvas.SetActive(false);
+                    return;
+                }
+
                 if (GameManager.instance.raceStatus != "start")
                 {
                     SetPosition();
@@ -113,7 +120,6 @@ public class CarController : NetworkBehaviour
                     Reset();
                 }
             }
-            Debug.Log(" Transform position is " + transform.position);
         }
     }
 
@@ -284,6 +290,7 @@ public class CarController : NetworkBehaviour
         playerUIController.UpdateSpeed(speed);
         playerUIController.UpdateTimer();
     }
+
     private void SetPosition()
     {
         int playerIndex = playerObjectController.PlayerIdNumber;
@@ -327,5 +334,13 @@ public class CarController : NetworkBehaviour
         yield return new WaitForSeconds(3);
         _isSpeedBoostActive = false;
     }
-    // }
+
+    public void CheckLapIndex()
+    {
+        lapIndex++;
+        if (lapIndex == 2)
+        {
+            GameManager.instance.FinishRace(gameObject);
+        }
+    }
 }
