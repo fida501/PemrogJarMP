@@ -88,10 +88,18 @@ public class GameManager : NetworkBehaviour
     }
 
     // Update the SyncVar value on the server
-    [Server]
+    // [Server]
+    // private void UpdateStatus(string newStatus)
+    // {
+    //     raceStatus = newStatus; // This will automatically sync to all clients
+    // }
+    [Command]
     private void UpdateStatus(string newStatus)
     {
-        raceStatus = newStatus; // This will automatically sync to all clients
+        if (isServer)
+        {
+            raceStatus = newStatus; // This will automatically sync to all clients
+        }
     }
 
     private void UpdateGlobalTMPText(string countdownText)
