@@ -26,7 +26,7 @@ public class GameManager : NetworkBehaviour
         else
         {
             Destroy(gameObject);
-        }
+        }   
     }
 
     public override void OnStartServer()
@@ -49,7 +49,6 @@ public class GameManager : NetworkBehaviour
     //     StartCoroutine(ChangeStatusAfterDelay("start"));
     //     // raceStatus = "start";
     // }
-    [ClientRpc]
     private void CmdInitializeRace()
     {
         isStarted = true;
@@ -59,7 +58,6 @@ public class GameManager : NetworkBehaviour
     }
 
 
-    // [ServerCallback]
     private void Update()
     {
         if (raceStatus == "start")
@@ -88,20 +86,17 @@ public class GameManager : NetworkBehaviour
         UpdateStatus(newStatus); // Update the SyncVar on the server
     }
 
-    [ClientRpc]
     private void DisableEssentials()
     {
         globalCanvas.SetActive(false);
     }
 
     // Update the SyncVar value on the server
-    [ServerCallback]
     private void UpdateStatus(string newStatus)
     {
         raceStatus = newStatus; // This will automatically sync to all clients
     }
 
-    [ClientRpc]
     private void UpdateGlobalTMPText(string countdownText)
     {
         globalTMP.text = countdownText;
