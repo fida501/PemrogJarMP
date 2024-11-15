@@ -43,6 +43,7 @@ public class CarController : NetworkBehaviour
     [SerializeField] PlayerObjectController playerObjectController;
     private bool _isSpeedBoostActive = false;
     [SyncVar] public int lapIndex;
+    [SerializeField] private AudioSource powerUpSource;
 
 
     public override void OnStartAuthority()
@@ -331,7 +332,9 @@ public class CarController : NetworkBehaviour
 
     private IEnumerator DisableSpeedPowerUp()
     {
+        powerUpSource.enabled = true;
         yield return new WaitForSeconds(3);
+        powerUpSource.enabled = false;
         _isSpeedBoostActive = false;
     }
 
