@@ -124,7 +124,7 @@ public class GameManager : NetworkBehaviour
 
     public void FinishRace(GameObject winnerGameObject)
     {
-        raceStatus = "finish";
+        UpdateStatus("finish");
 
         // Display the winner's name
         string winnerName = winnerGameObject.GetComponent<PlayerObjectController>().PlayerName;

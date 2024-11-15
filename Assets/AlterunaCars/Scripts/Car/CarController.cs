@@ -341,7 +341,7 @@ public class CarController : NetworkBehaviour
     public void CheckLapIndex()
     {
         lapIndex++;
-        if (lapIndex == 2)
+        if (lapIndex == 1)
         {
             GameManager.instance.FinishRace(gameObject);
         }
