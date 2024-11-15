@@ -125,7 +125,7 @@ public class GameManager : NetworkBehaviour
                 winnerName + " finished in " + raceTime.ToString("F2") + " seconds!";
         }
     }
-
+    [Command (requiresAuthority = false)]
     public void FinishRace(GameObject winnerGameObject)
     {
         // Display the winner's name
