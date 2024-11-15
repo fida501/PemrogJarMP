@@ -42,8 +42,13 @@ public class CarController : NetworkBehaviour
     public PlayerUIController playerUIController;
     [SerializeField] PlayerObjectController playerObjectController;
     private bool _isSpeedBoostActive = false;
+        private bool _isAttacktActive = false;
     [SyncVar] public int lapIndex;
     [SerializeField] private AudioSource powerUpSource;
+    [SerializeField] private Transform bulletSpawnPoint;
+    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private int bulletSpeed = 50;
+    [SerializeField] private int bulletDelay = 1;
 
 
     public override void OnStartAuthority()
@@ -119,6 +124,11 @@ public class CarController : NetworkBehaviour
                 if (Input.GetKeyUp(KeyCode.R))
                 {
                     Reset();
+                }
+                //input click kiri untuk menembak
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Fire();
                 }
             }
         }
@@ -323,12 +333,27 @@ public class CarController : NetworkBehaviour
         _rb.constraints = RigidbodyConstraints.None;
     }
 
+
+    //fire mekanik
+    private void Fire()
+    {
+        GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+        bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bulletSpeed;
+        Destroy(bullet, 2);
+    }
+
     public void ActiveSpeedPowerUp()
     {
         _isSpeedBoostActive = true;
         Debug.Log("SpeedBoost activated is " + _isSpeedBoostActive);
         StartCoroutine(DisableSpeedPowerUp());
     }
+
+    // public void ActiveAttackPowerUp(){
+    //     _isAttacktActive = true;
+    //     Debug.Log("Attack activated is " + _isAttacktActive);
+    //     StartCoroutine(DisableAttackPowerUp());
+    // }
 
     private IEnumerator DisableSpeedPowerUp()
     {
@@ -346,4 +371,15 @@ public class CarController : NetworkBehaviour
             GameManager.instance.FinishRace(gameObject);
         }
     }
+
+    // private IEnumerator DisableAttackPowerUp(){
+    //     Fire();
+    //     yield return new WaitForSeconds(1f);
+    //     Fire();
+    //     yield return new WaitForSeconds(1f);
+    //     Fire();
+    //     yield return new WaitForSeconds(1f);
+    //     powerUpSource.enabled = false;
+    //     _isAttacktActive = false;
+    // }
 }
