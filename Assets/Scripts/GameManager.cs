@@ -121,8 +121,8 @@ public class GameManager : NetworkBehaviour
         if (newStatus == "finish")
         {
             endTMP.SetActive(true);
-            endTMP.GetComponent<TextMeshProUGUI>().text =
-                "Player " + playerIndex + " finished in " + raceTime.ToString("F2") + " seconds!";
+            endTMP.GetComponentInChildren<TextMeshProUGUI>().text =
+                "Player " + playerIndex + " finished in " + raceTime + " seconds!";
         }
     }
 
