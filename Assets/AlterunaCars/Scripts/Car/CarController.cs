@@ -128,7 +128,8 @@ public class CarController : NetworkBehaviour
                 //input click kiri untuk menembak
                 if (Input.GetMouseButtonDown(0))
                 {
-                    Fire();
+                    // Fire();
+                    StartCoroutine(fireIEnumerator());
                 }
             }
         }
@@ -335,11 +336,23 @@ public class CarController : NetworkBehaviour
 
 
     //fire mekanik
-    private void Fire()
+    // private void Fire()
+    // {
+    //     GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+    //     bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bulletSpeed;
+    //     NetworkServer.Spawn(bullet);
+    //     //destroy after 2 second
+    //     Destroy(bullet, 2);
+    //     NetworkServer.Destroy(bullet);
+    // }
+    private IEnumerator fireIEnumerator()
     {
         GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
         bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bulletSpeed;
-        Destroy(bullet, 2);
+        NetworkServer.Spawn(bullet);
+        //destroy after 2 second
+        yield return new WaitForSeconds(2);
+        NetworkServer.Destroy(bullet);
     }
 
     public void ActiveSpeedPowerUp()
