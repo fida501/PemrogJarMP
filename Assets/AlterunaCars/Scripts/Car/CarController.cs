@@ -343,7 +343,7 @@ public class CarController : NetworkBehaviour
         lapIndex++;
         if (lapIndex == 1)
         {
-            GameManager.instance.FinishRace(gameObject);
+            GameManager.instance.FinishRace(playerObjectController.PlayerIdNumber);
         }
     }
 }
