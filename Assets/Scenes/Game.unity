@@ -1140,7 +1140,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &77727038
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13862,7 +13862,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1523809674
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15056,7 +15056,7 @@ MonoBehaviour:
   globalTMP: {fileID: 2066671587}
   players: []
   isStarted: 0
-  endTMP: {fileID: 1523809673}
+  endTMP: {fileID: 77727037}
   playerIndex: 0
   raceTime: 0
 --- !u!4 &1699438418

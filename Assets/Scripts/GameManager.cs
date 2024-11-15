@@ -19,7 +19,7 @@ public class GameManager : NetworkBehaviour
     [SyncVar] public List<GameObject> players = new List<GameObject>();
     public bool isStarted = false;
     public GameObject endTMP;
-    public int playerIndex;
+    public string winnerName;
     public float raceTime;
 
     private void Awake()
@@ -121,16 +121,15 @@ public class GameManager : NetworkBehaviour
         if (newStatus == "finish")
         {
             endTMP.SetActive(true);
-            endTMP.GetComponentInChildren<TextMeshProUGUI>().text =
-                "Player " + playerIndex + " finished in " + raceTime + " seconds!";
+            endTMP.GetComponent<TextMeshProUGUI>().text =
+                winnerName + " finished in " + raceTime.ToString("F2") + " seconds!";
         }
     }
 
-    public void FinishRace(int playerIndex)
+    public void FinishRace(GameObject winnerGameObject)
     {
         // Display the winner's name
-        // winnerName = winnerGameObject.GetComponent<PlayerObjectController>().PlayerName;
-        playerIndex = playerIndex;
+        winnerName = winnerGameObject.GetComponent<PlayerObjectController>().PlayerName;
         raceTime = gameTimer;
         UpdateStatus("finish");
     }
