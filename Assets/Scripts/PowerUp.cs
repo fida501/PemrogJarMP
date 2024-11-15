@@ -14,9 +14,8 @@ public class PowerUp : NetworkBehaviour
         Attack
     }
 
-    [SyncVar] public PowerUpType powerUpType;
+    public PowerUpType powerUpType;
 
-    [ServerCallback]
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Car"))

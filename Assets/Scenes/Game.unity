@@ -14532,7 +14532,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: PowerUp (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6515406299936581005, guid: 6311e193ea1bcb743b292a52db9da0fa, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -15057,7 +15058,7 @@ MonoBehaviour:
   players: []
   isStarted: 0
   endTMP: {fileID: 77727037}
-  playerIndex: 0
+  winnerName: 
   raceTime: 0
 --- !u!4 &1699438418
 Transform:
